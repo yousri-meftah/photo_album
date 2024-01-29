@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] });
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Sidebar } from "@/components/ui/side_bar"
+import {ModeToggle} from "../components/ui/color_mode"
+import {MainNav} from "@/components/ui/nav_bar"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +20,39 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" >
+      <body >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main >
+        <div className="border-b ">
+          <div className="flex h-16 items-center px-4 container mx-auto">
+            <MainNav className="mx-6" />
+            <div className="ml-auto flex items-center space-x-4">
+            <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Button>Login</Button>
+            <Button>signIn</Button>
+            <ModeToggle />
+            </div>
+          </div>
+        </div>
+        <div className="flex w-full">
+       <Sidebar />
+       <div className="w-full p-10">
+          {children}
+       </div>
+       </div>
+      </main>
+            
+          </ThemeProvider>
+        </body>
     </html>
   );
 }
